@@ -15,12 +15,20 @@ import config from "./config.json";
 function App() {
 	const [account, setAccount] = useState(null);
 	const [provider, setProvider] = useState(null);
+
 	const [dappazon, setDappazon] = useState(null);
+
 	const [electronics, setElectronics] = useState(null);
 	const [clothing, setClothing] = useState(null);
 	const [toys, setToys] = useState(null);
 
-	const togglePop = () => {};
+	const [item, setItem] = useState({});
+	const [toggle, setToggle] = useState(false);
+
+	const togglePop = (item) => {
+		setItem(item);
+		toggle ? setToggle(false) : setToggle(true);
+	};
 
 	const loadBlockchainData = async () => {
 		// connect to blockchain
@@ -74,6 +82,16 @@ function App() {
 					/>
 					<Section title="Toys & Gaming" items={toys} togglePop={togglePop} />
 				</>
+			)}
+
+			{toggle && (
+				<Product
+					item={item}
+					togglePop={togglePop}
+					provider={provider}
+					account={account}
+					dappazon={dappazon}
+				/>
 			)}
 		</div>
 	);
